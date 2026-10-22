@@ -17,8 +17,4 @@ Bem-vindo! Esta wiki mostra como editar documentação sem precisar conhecer Git
 - [Primeiros passos](guias/primeiros-passos.md)
 - [Processo de aprovação](processos/aprovacao.md)
 
-## Exemplo de imagem
-
-![1.00](assets/1792668582350-techdocs-1.jpeg)
-
-![1.00](assets/1792671439144-techdocs-2.jpeg)
+##
