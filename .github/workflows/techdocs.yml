@@ -1,0 +1,103 @@
+# Pipeline das docs. Os nomes dos jobs aparecem para o usuário no editor do portal
+# e são os checks obrigatórios do ruleset da main (ver setup-github.sh).
+name: techdocs
+
+on:
+  pull_request:
+  push:
+    branches: [main]
+
+permissions:
+  contents: read
+
+jobs:
+  formatacao:
+    name: Formatação do texto
+    if: github.event_name == 'pull_request'
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: DavidAnson/markdownlint-cli2-action@v19
+        with:
+          globs: 'docs/**/*.md'
+
+  links:
+    name: Links
+    if: github.event_name == 'pull_request'
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: lycheeverse/lychee-action@v2
+        with:
+          args: --no-progress --root-dir ${{ github.workspace }}/docs 'docs/**/*.md'
+          fail: true
+
+  dados-sensiveis:
+    name: Dados sensíveis
+    if: github.event_name == 'pull_request'
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - uses: gitleaks/gitleaks-action@v2
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+  montagem:
+    name: Montagem da documentação
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0   # histórico completo: datas de criação e atualização das páginas
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - run: pip install mkdocs-techdocs-core==1.7.1 mkdocs-git-revision-date-localized-plugin==1.6.0
+      - run: mkdocs build --strict
+
+  publicar:
+    name: Publicar no TechDocs
+    if: github.event_name == 'push'
+    needs: montagem
+    runs-on: ubuntu-latest
+    concurrency: techdocs-publish
+    env:
+      ENTITY: default/component/wiki-demo
+      # Conta e chave de desenvolvimento padrão do Azurite (públicas, documentadas pela Microsoft)
+      AZURE_STORAGE_CONNECTION_STRING: DefaultEndpointsProtocol=http;AccountName=devstoreaccount1;AccountKey=Eby8vdM02xNOcqFlqUwJPLlmEtlCDXJ1OUzFT50uSRZ6IFsuFq2UVErCz4I6tq/K1SZFPTOtr/KBHBeksoGMGw==;BlobEndpoint=http://127.0.0.1:10000/devstoreaccount1;
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '24'
+      - run: pip install mkdocs-techdocs-core==1.7.1 mkdocs-git-revision-date-localized-plugin==1.6.0
+
+      - name: Gerar o site
+        run: npx -y @techdocs/cli@1.13.0 generate --no-docker --source-dir . --output-dir site
+
+      # Na demo, o "Azure" é um Azurite efêmero dentro do job: o passo de publicação é o real,
+      # só o destino é simulado. O site vai também como artefato para o sync local.
+      - name: Subir Azure Blob simulado (Azurite)
+        run: >
+          docker run -d --name azurite -p 10000:10000
+          mcr.microsoft.com/azure-storage/azurite:3.37.0
+          azurite-blob --blobHost 0.0.0.0 --skipApiVersionCheck --loose
+
+      - name: Publicar no Azure Blob
+        run: |
+          npm install --prefix /tmp/publisher --no-save --silent \
+            @backstage/plugin-techdocs-node@2.1.0 @backstage/config@1.3.10 @azure/storage-blob@12.34.0
+          NODE_PATH=/tmp/publisher/node_modules node .github/scripts/techdocs-azure-publish.cjs site "$ENTITY"
+
+      - uses: actions/upload-artifact@v4
+        with:
+          name: techdocs-site
+          path: site
+          retention-days: 7
