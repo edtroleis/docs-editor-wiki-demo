@@ -26,6 +26,7 @@ O editor abre no modo **Visual**: escreva como num editor de texto.
 | Usar os botões                                 | Use a barra fixa no alto do editor                     |
 | Desfazer                                       | Ctrl+Z (refazer: Ctrl+Y)                               |
 | Procurar um texto                              | Ctrl+F                                                 |
+| Ver ou voltar versões anteriores               | Botão **Histórico**, acima do editor                   |
 
 O modo **Markdown** mostra a página como ela fica guardada. Use se quiser ajustar algo à mão; as duas visões mostram o mesmo conteúdo.
 
@@ -69,6 +70,18 @@ Cada pessoa tem o próprio rascunho, então ninguém apaga o trabalho de ningué
 - se vocês mexeram em partes diferentes, o editor junta as duas sozinho;
 - se mexeram no mesmo trecho, o editor mostra as duas versões e você escolhe o que fica.
 
+## Cancelar um envio
+
+Enquanto a alteração não foi publicada, abra o editor na página e clique em **Descartar rascunho** (a lixeira, na lateral). O pedido de publicação é cancelado e o editor volta ao texto publicado.
+
+Se você abriu a alteração direto no GitHub, fora do editor, o editor mostra um aviso com o link: para cancelar, feche o pull request no GitHub.
+
+## Voltar a uma versão anterior
+
+Clique em **Histórico**, acima do editor, para ver as versões publicadas da página, da mais nova para a mais antiga. **Restaurar** coloca o texto daquela versão no editor; para publicar, salve, verifique e envie como numa edição normal.
+
+Para desfazer o que você escreveu e ainda não salvou, restaure a versão mais recente (marcada como "publicada agora").
+
 ## Datas da página
 
-No fim de cada página aparecem a **Última atualização** e a **Data de criação**, com dia e hora. Elas mudam sozinhas quando uma alteração é publicada.
+No alto de cada página, à esquerda do lápis, aparecem a **Última atualização** e a **Data de criação**, com dia e hora. Elas mudam sozinhas quando uma alteração é publicada.
