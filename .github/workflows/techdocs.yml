@@ -6,6 +6,8 @@ on:
   pull_request:
   push:
     branches: [main]
+  # "Run workflow" no GitHub: republica a main sem precisar de um novo merge
+  workflow_dispatch:
 
 permissions:
   contents: read
@@ -59,7 +61,7 @@ jobs:
 
   publicar:
     name: Publicar no TechDocs
-    if: github.event_name == 'push'
+    if: github.event_name != 'pull_request'
     needs: montagem
     runs-on: ubuntu-latest
     concurrency: techdocs-publish
