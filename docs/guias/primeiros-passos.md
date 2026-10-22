@@ -9,8 +9,6 @@ Esta página é um exemplo de guia. Experimente editá-la! Este trecho foi escri
 
 > Dica: salve o rascunho sempre que quiser; só você vê.
 
-/li
-
 ## Antes de começar
 
 Você vai precisar de:
