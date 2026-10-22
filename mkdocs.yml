@@ -11,6 +11,8 @@ plugins:
   - git-revision-date-localized:
       type: date
       locale: pt
+      # Sem isto as datas saem em UTC: um commit às 23h em Brasília aparecia como o dia seguinte
+      timezone: America/Sao_Paulo
       enable_creation_date: true
       fallback_to_build_date: true
 
