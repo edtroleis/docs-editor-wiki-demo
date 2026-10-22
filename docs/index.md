@@ -16,3 +16,19 @@ Bem-vindo! Esta wiki mostra como editar documentação sem precisar conhecer Git
 
 - [Primeiros passos](guias/primeiros-passos.md)
 - [Processo de aprovação](processos/aprovacao.md)
+
+<br />
+
+<br />
+
+### Imagens
+
+![1.00](blob:http://localhost:3001/0b5f89ae-807c-4183-94b8-e743b789d55f)
+
+Imagens que coloquei para testar
+
+<br />
+
+```
+ls -ltr
+```
