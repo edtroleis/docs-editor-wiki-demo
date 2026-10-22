@@ -17,4 +17,9 @@ Bem-vindo! Esta wiki mostra como editar documentação sem precisar conhecer Git
 - [Primeiros passos](guias/primeiros-passos.md)
 - [Processo de aprovação](processos/aprovacao.md)
 
-##
+## Teste 1
+
+| 1  | 2  | 3  |
+| :- | :- | :- |
+| 4  | 5  | 6  |
+| 7  | 8  | 9  |
