@@ -1,6 +1,15 @@
 # Primeiros passos
 
-Esta página é um exemplo de guia. Experimente editá-la!
+Esta página é um exemplo de guia. Experimente editá-la! Este trecho foi escrito no **editor visual do portal**.
+
+## Checklist da página
+
+- [ ] Revisar o texto
+- [ ] Conferir os links
+
+> Dica: salve o rascunho sempre que quiser; só você vê.
+
+/li
 
 ## Antes de começar
 
