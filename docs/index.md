@@ -23,3 +23,4 @@ Bem-vindo! Esta wiki mostra como editar documentação sem precisar conhecer Git
 | :- | :- | :- |
 | 4  | 5  | 6  |
 | 7  | 8  | 9  |
+| 1 | 2| 3|
