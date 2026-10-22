@@ -79,8 +79,11 @@ jobs:
           node-version: '24'
       - run: pip install mkdocs-techdocs-core==1.7.1 mkdocs-git-revision-date-localized-plugin==1.6.0
 
+      # O techdocs-cli remove plugins do MkDocs fora da lista dele; --defaultPlugin libera o das datas
       - name: Gerar o site
-        run: npx -y @techdocs/cli@1.13.0 generate --no-docker --source-dir . --output-dir site
+        run: >
+          npx -y @techdocs/cli@1.13.0 generate --no-docker --source-dir . --output-dir site
+          --defaultPlugin git-revision-date-localized
 
       # Na demo, o "Azure" é um Azurite efêmero dentro do job: o passo de publicação é o real,
       # só o destino é simulado. O site vai também como artefato para o sync local.
